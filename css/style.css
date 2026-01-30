@@ -1,0 +1,257 @@
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;900&display=swap');
+
+*{box-sizing:border-box;font-family:'Poppins',sans-serif}
+
+body{
+  margin:0;
+  min-height:100vh;
+  background:black;
+  color:white;
+  overflow:hidden;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+
+/* ================= GALAXY ================= */
+.galaxy-bg{
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 35% 40%,rgba(255,200,230,.4),transparent 60%),
+    radial-gradient(circle at 65% 55%,rgba(200,100,180,.3),transparent 65%),
+    linear-gradient(180deg,#2b0721,#4b0f39,#220016,#070009);
+  z-index:-20;
+}
+
+/* ================= STARS ================= */
+.star{
+  position:fixed;
+  width:2px;height:2px;
+  background:white;
+  border-radius:50%;
+  box-shadow:0 0 6px #fff;
+  z-index:-10;
+}
+
+/* ================= METEOR ================= */
+.meteor{
+  position:fixed;
+  width:3px;height:260px;
+  background:linear-gradient(135deg,#fff,#9be7ff,#ff6fcf00);
+  transform:rotate(135deg);
+  filter:drop-shadow(0 0 14px #ff7ad6);
+  animation:meteorFall linear forwards;
+  z-index:-8;
+}
+@keyframes meteorFall{
+  from{transform:translate(-30vw,-30vh) rotate(135deg)}
+  to{transform:translate(120vw,120vh) rotate(135deg);opacity:0}
+}
+
+/* ================= ENVELOPE ================= */
+.envelope{
+  width:280px;
+  height:180px;
+  position:relative;
+  cursor:pointer;
+  border-radius:14px;
+  background:linear-gradient(180deg,#ff9fd1,#ff6fb6);
+  box-shadow:
+    0 0 28px rgba(255,105,180,.45),
+    0 22px 45px rgba(0,0,0,.55);
+  animation:pulse 2.2s infinite;
+  z-index:30;
+  perspective:900px;
+}
+
+/* ================= FLAP ATAS (PALING BELAKANG) ================= */
+.envelope-top{
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,#ffb3df,#ff7fbe);
+  clip-path:polygon(0 0,50% 55%,100% 0);
+  border-radius:14px;
+  transform-origin:top;
+  transform:rotateX(0) translateZ(-2px);
+  transition:transform 1s cubic-bezier(.2,.85,.2,1);
+  z-index:0;                 /* 🔴 PALING BAWAH */
+  backface-visibility:hidden;
+}
+
+/* ================= KERTAS ================= */
+.envelope-paper{
+  position:absolute;
+  left:18px;
+  right:18px;
+  top:22px;
+  height:120px;
+  background:#fff;
+  border-radius:6px;
+  box-shadow:0 10px 20px rgba(0,0,0,.25);
+  transform:translateY(30px);
+  opacity:0;
+  z-index:3;               /* 🔴 DI ATAS FLAP */
+  transition:
+    transform 1s cubic-bezier(.2,.85,.2,1),
+    opacity .5s ease;
+}
+
+/* ================= BADAN BAWAH ================= */
+.envelope-body{
+  position:absolute;
+  inset:0;
+  border-radius:14px;
+  background:linear-gradient(180deg,#ff9fd1,#ff6fb6);
+  z-index:6;                 /* 🔴 DI ATAS KERTAS */
+}
+
+/* ================= BADAN KIRI ================= */
+.envelope::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    135deg,
+    rgba(255,255,255,.28),
+    rgba(255,255,255,0) 60%
+  );
+  clip-path:polygon(0 0,50% 55%,0 100%);
+  border-radius:14px;
+  z-index:6;                 /* 🔴 DI ATAS KERTAS */
+}
+
+/* ================= BADAN KANAN ================= */
+.envelope::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(
+    225deg,
+    rgba(255,255,255,.25),
+    rgba(255,255,255,0) 60%
+  );
+  clip-path:polygon(100% 0,50% 55%,100% 100%);
+  border-radius:14px;
+  z-index:6;                 /* 🔴 DI ATAS KERTAS */
+}
+
+/* ================= HATI ================= */
+.envelope-heart{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:26px;
+  color:#ff2f92;
+  z-index:9;                 /* 🔴 PALING ATAS */
+  text-shadow:0 0 14px rgba(255,47,146,.6);
+}
+
+/* ================= TEKS ================= */
+.envelope-text{
+  position:absolute;
+  bottom:16px;
+  width:100%;
+  text-align:center;
+  font-size:14px;
+  font-weight:500;
+  color:#4a0026;
+  z-index:9;                 /* 🔴 PALING ATAS */
+}
+
+/* ================= OPEN STATE ================= */
+.envelope.open .envelope-top{
+  transform:
+    rotateX(180deg)
+    translateZ(-60px);   /* 🔴 DORONG KE BELAKANG */
+}
+
+.envelope.open .envelope-paper{
+  opacity:1;
+  transform:translateY(-32px); /* naik dari dalam */
+}
+
+/* ================= PULSE ================= */
+@keyframes pulse{
+  0%,100%{box-shadow:0 0 18px rgba(255,79,216,.55)}
+  50%{box-shadow:0 0 40px rgba(255,79,216,.85)}
+}
+
+.wrapper{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  z-index:20;
+}
+
+.hidden{opacity:0;pointer-events:none}
+.show{opacity:1}
+
+/* ================= TEXT ================= */
+.greetings{
+  font-size:6rem;
+  font-weight:900;
+  line-height:1.05;
+  margin-bottom:30px;
+}
+
+.greetings span{
+  display:inline-block;
+  opacity:0;
+  transform:translateY(16px) scale(.95);
+  animation:
+    reveal .6s forwards,
+    glow 4s ease-in-out infinite;
+  animation-delay:
+    calc(var(--i)*.25s),
+    calc(var(--i)*.25s + .8s);
+}
+
+@keyframes reveal{to{opacity:1;transform:translateY(0) scale(1)}}
+
+@keyframes glow{
+  0%{color:#9be7ff;text-shadow:0 0 14px #39c6d6}
+  60%{color:#fff;text-shadow:0 0 18px #39c6d6}
+  85%{color:#ffd6ec;text-shadow:0 0 26px #ff4fd8}
+  100%{color:#ffd6ec;text-shadow:0 0 20px #ff4fd8}
+}
+
+.description{
+  font-size:1.35rem;
+  margin-top:14px;
+  opacity:0;
+  transform:translateY(10px);
+  animation:fadeIn .8s forwards;
+}
+.delay-1{animation-delay:2.2s}
+.delay-2{animation-delay:3s}
+.delay-3{animation-delay:3.8s}
+
+@keyframes fadeIn{to{opacity:1;transform:translateY(0)}}
+
+.button{margin-top:34px}
+.button a{
+  padding:14px 34px;
+  background:#fff;
+  color:#000;
+  border-radius:30px;
+  text-decoration:none;
+  font-weight:600;
+}
+.button a:hover{
+  background:#ff4fd8;
+  box-shadow:0 0 25px #ff4fd8;
+}
+
+@media(max-width:600px){
+  .greetings{font-size:3rem}
+  .description{font-size:1rem}
+}
